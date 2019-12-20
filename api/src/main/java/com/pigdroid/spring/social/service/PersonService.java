@@ -1,5 +1,7 @@
 package com.pigdroid.spring.social.service;
 
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +22,8 @@ public class PersonService {
 
 	@Transactional(readOnly = true)
 	public Person findById(Long id) {
-		return this.personRepository.findOne(id);
+		Optional<Person> ret = this.personRepository.findById(id);
+		return ret.isPresent() ? ret.get() : null;
 	}
 
 	@Transactional(readOnly = true)

@@ -7,16 +7,17 @@ import static com.pigdroid.spring.social.config.Constants.REMEMBER_ME_TOKEN;
 import java.util.Arrays;
 import java.util.Collections;
 
-import org.springframework.boot.autoconfigure.security.Http401AuthenticationEntryPoint;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
@@ -63,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/webjars/**"
         };
 
-        // @formatter:off
+		// @formatter:off
         http
             .cors()
                 .and()
@@ -92,10 +93,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.and()
 			.rememberMe()
 				.rememberMeServices(rememberMeService())
-				.key(REMEMBER_ME_TOKEN)
+				.key(Constants.REMEMBER_ME_TOKEN)
 				.and()
 			.exceptionHandling()
-                .authenticationEntryPoint(new Http401AuthenticationEntryPoint("Access Denied"))
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
 		;
 		// @formatter:on
     }

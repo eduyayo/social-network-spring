@@ -1,18 +1,18 @@
 package com.pigdroid.spring.social;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.pigdroid.spring.social.domain.Message;
-import com.pigdroid.spring.social.domain.Person;
-import com.pigdroid.spring.social.model.MessagePost;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.GregorianCalendar;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.GregorianCalendar;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pigdroid.spring.social.domain.Message;
+import com.pigdroid.spring.social.domain.Person;
+import com.pigdroid.spring.social.model.MessagePost;
 
 public abstract class AbstractApplicationTest {
 
@@ -53,7 +53,7 @@ public abstract class AbstractApplicationTest {
 	}
 
 	protected static Pageable getDefaultPageRequest() {
-		return new PageRequest(0, 20);
+		return PageRequest.of(0, 20);
 //	    return new PageRequest(1,
 //			    10,
 //			    new Sort(Sort.Direction.DESC, "description")

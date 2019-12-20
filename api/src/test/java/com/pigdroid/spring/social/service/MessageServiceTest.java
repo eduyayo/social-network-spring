@@ -1,25 +1,27 @@
 package com.pigdroid.spring.social.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
+
+import java.util.Collection;
+
+import javax.transaction.Transactional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.pigdroid.spring.social.AbstractApplicationTest;
 import com.pigdroid.spring.social.domain.Message;
 import com.pigdroid.spring.social.domain.Person;
-import com.pigdroid.spring.social.service.MessageService;
-
-import javax.transaction.Transactional;
-import java.util.Collection;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.tuple;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest()
 @Transactional
+@AutoConfigureTestDatabase
 public class MessageServiceTest extends AbstractApplicationTest {
 
     @Autowired
@@ -32,7 +34,7 @@ public class MessageServiceTest extends AbstractApplicationTest {
         final Person interlocutor = Person.builder()
                 .id(6L)
                 .build();
-        final Collection<Message> messages = messageService.getDialog(person, interlocutor);
+        final Collection<Message> messages = this.messageService.getDialog(this.person, interlocutor);
 
         assertThat(messages).hasSize(5);
         assertThat(messages)
@@ -44,7 +46,7 @@ public class MessageServiceTest extends AbstractApplicationTest {
 
     @Test
     public void shouldFindAllLastMessagesByPerson() throws Exception {
-        final Collection<Message> messages = messageService.getLastMessages(person);
+        final Collection<Message> messages = this.messageService.getLastMessages(this.person);
 
         assertThat(messages).hasSize(5);
         assertThat(messages)
@@ -56,11 +58,11 @@ public class MessageServiceTest extends AbstractApplicationTest {
 
     @Test
     public void shouldSaveMessage() throws Exception {
-        final Collection<Message> before = messageService.getDialog(person, person);
+        final Collection<Message> before = this.messageService.getDialog(this.person, this.person);
 
-        messageService.send(getDefaultMessage());
+        this.messageService.send(getDefaultMessage());
 
-        final Collection<Message> after = messageService.getDialog(person, person);
+        final Collection<Message> after = this.messageService.getDialog(this.person, this.person);
 
         assertThat(before.size()).isEqualTo(after.size() - 1);
         assertThat(after)

@@ -1,28 +1,5 @@
 package com.pigdroid.spring.social.web;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.context.WebApplicationContext;
-
-import com.pigdroid.spring.social.AbstractApplicationTest;
-import com.pigdroid.spring.social.config.Constants;
-import com.pigdroid.spring.social.domain.Message;
-import com.pigdroid.spring.social.domain.Person;
-import com.pigdroid.spring.social.model.MessagePost;
-import com.pigdroid.spring.social.service.MessageService;
-import com.pigdroid.spring.social.service.PersonService;
-import com.pigdroid.spring.social.web.MessageController;
-
-import java.util.Arrays;
-
 import static com.pigdroid.spring.social.config.Constants.URI_MESSAGES;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -31,13 +8,37 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Arrays;
+
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.pigdroid.spring.social.AbstractApplicationTest;
+import com.pigdroid.spring.social.domain.Message;
+import com.pigdroid.spring.social.domain.Person;
+import com.pigdroid.spring.social.model.MessagePost;
+import com.pigdroid.spring.social.service.MessageService;
+import com.pigdroid.spring.social.service.PersonService;
+
 @RunWith(SpringRunner.class)
-@ContextConfiguration
-@WebMvcTest(value = {MessageController.class, Constants.class})
+//@ContextConfiguration
+@SpringBootTest()
+@AutoConfigureTestDatabase
 public class MessageControllerTest extends AbstractApplicationTest {
 
 	private final static String URI = URI_MESSAGES;
-	
+
 	private MockMvc mvc;
 
 	@Autowired private WebApplicationContext context;
@@ -49,54 +50,57 @@ public class MessageControllerTest extends AbstractApplicationTest {
 
 	@Before
 	public void setup() {
-		mvc = MockMvcBuilders
-				.webAppContextSetup(context)
-				.defaultRequest(get("/").with(user(person)))
+		this.mvc = MockMvcBuilders
+				.webAppContextSetup(this.context)
+				.defaultRequest(get("/").with(user(this.person)))
 				.build();
 	}
 
 	@Test
+    @WithUserDetails("alsaunin@gmail.com")
 	public void getDialogWithExistingPersonShouldReturnListOfMessages() throws Exception {
-		given(personService.findById(person.getId())).willReturn(person);
-		given(messageService.getDialog(person, person)).willReturn(Arrays.asList(message));
+		given(this.personService.findById(this.person.getId())).willReturn(this.person);
+		given(this.messageService.getDialog(this.person, this.person)).willReturn(Arrays.asList(this.message));
 
-		mvc.perform(
-				get(URI + "/dialog/{id}.json", person.getId())
+		this.mvc.perform(
+				get(URI + "/dialog/{id}.json", this.person.getId())
 						.contentType(APPLICATION_JSON_UTF8))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$[0].body").value(DEFAULT_MESSAGE_TEXT));
 	}
 
 	@Test
+    @WithUserDetails("alsaunin@gmail.com")
 	public void getDialogWithMissingPersonShouldReturnNotFoundStatus() throws Exception {
-		given(personService.findById(Long.MAX_VALUE)).willReturn(null);
+		given(this.personService.findById(Long.MAX_VALUE)).willReturn(null);
 
-		mvc.perform(
+		this.mvc.perform(
 				get(URI + "/dialog/{id}.json", Long.MAX_VALUE)
-						.contentType(APPLICATION_JSON_UTF8))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
 	}
 
 	@Test
+    @WithUserDetails("alsaunin@gmail.com")
 	public void getLastMessagesShouldReturnListOfMessages() throws Exception {
-		given(messageService.getLastMessages(person)).willReturn(Arrays.asList(message));
+		given(this.messageService.getLastMessages(this.person)).willReturn(Arrays.asList(this.message));
 
-		mvc.perform(
+		this.mvc.perform(
 				get(URI + "/last.json")
-						.contentType(APPLICATION_JSON_UTF8))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$[0].body").value(DEFAULT_MESSAGE_TEXT));
 	}
 
 	@Test
 	public void sendMessageShouldReturnCreatedStatus() throws Exception {
-		final MessagePost messagePost = getDefaultMessagePost(person);
-		given(messageService.send(message)).willReturn(message);
+		final MessagePost messagePost = getDefaultMessagePost(this.person);
+		given(this.messageService.send(this.message)).willReturn(this.message);
 
-		mvc.perform(
+		this.mvc.perform(
 				post(URI + "/add.json")
 						.content(convertObjectToJsonBytes(messagePost))
-						.contentType(APPLICATION_JSON_UTF8))
+						.contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated());
 	}
 
