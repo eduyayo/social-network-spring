@@ -17,8 +17,8 @@ spring:
     hibernate:
       ddl-auto: update
 
-  resources:
-    static-locations: "file:webapp/src/,file:webapp/bower_components/"
+#  resources:
+#    static-locations: "file:webapp/src/,file:webapp/bower_components/"
 
   thymeleaf:
     cache: false

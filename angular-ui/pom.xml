@@ -5,16 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>org.asaunin</groupId>
-        <artifactId>social-network-spring</artifactId>
+    <groupId>com.pigdroid</groupId>
+    <artifactId>spring-social-network</artifactId>
         <version>1.0.0-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
     <name>Social network - Spring AngularJS Client</name>
-    <artifactId>webapp</artifactId>
+    <artifactId>angular-ui</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
 
     <properties>
         <node.version>v4.4.3</node.version>
@@ -25,7 +25,6 @@
     </properties>
 
     <build>
-        <finalName>social-network-web-${project.version}</finalName>
         <resources>
             <resource>
                 <directory>${project.build.directory}/dist</directory>
