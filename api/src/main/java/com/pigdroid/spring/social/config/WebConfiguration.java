@@ -16,8 +16,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHan
 public class WebConfiguration implements WebMvcConfigurer {
 
 	@Bean // TODO: Enables h2 console - only for development environment
-	ServletRegistrationBean h2servletRegistration(){
-		ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
+	ServletRegistrationBean<WebServlet> h2servletRegistration() {
+		ServletRegistrationBean<WebServlet> registrationBean = new ServletRegistrationBean<WebServlet>(new WebServlet());
 		registrationBean.addUrlMappings("/console/*");
 		return registrationBean;
 	}
@@ -26,16 +26,15 @@ public class WebConfiguration implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler(AVATAR_FOLDER + "**").addResourceLocations(AVATAR_FOLDER);
 
-		registry.addResourceHandler("swagger-ui.html")
-				.addResourceLocations("classpath:/META-INF/resources/");
+		registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
 //		registry.addResourceHandler("/webjars/**")
 //				.addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
 
 	@Override
-	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {ServletInvocableHandlerMethod d;
-		configurer
-			.favorPathExtension(true);
+	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+		ServletInvocableHandlerMethod d;
+		configurer.favorPathExtension(true);
 	}
 
 	@Override

@@ -3,9 +3,6 @@ package com.pigdroid.spring.social.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.pigdroid.spring.social.domain.Person;
 import com.pigdroid.spring.social.security.SecurityUtils;
 import com.pigdroid.spring.social.service.AvatarService;
@@ -17,7 +14,7 @@ import lombok.ToString;
 @ToString
 public class PersonView implements Serializable {
 
-	private static final Logger log = LoggerFactory.getLogger(PersonView.class);
+	private static final long serialVersionUID = 1L;
 
 	private Long id;
 	private String avatar;

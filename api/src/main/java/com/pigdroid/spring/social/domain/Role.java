@@ -25,30 +25,35 @@ import lombok.Setter;
 @EqualsAndHashCode
 public class Role implements Serializable {
 
-    public static final Role ADMIN = new Role(1L, "ROLE_ADMIN", "admin");
-    public static final Role USER = new Role(2L, "ROLE_USER", "user");
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter @Setter
-    private Long id;
+	public static final Role ADMIN = new Role(1L, "ROLE_ADMIN", "admin");
+	public static final Role USER = new Role(2L, "ROLE_USER", "user");
 
-    @Column(length = 50, unique = true)
-    @Getter @Setter
-    private String name;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Getter
+	@Setter
+	private Long id;
 
-    @Column(length = 50)
-    @Getter @Setter
-    private String description;
+	@Column(length = 50, unique = true)
+	@Getter
+	@Setter
+	private String name;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set<Person> users;
+	@Column(length = 50)
+	@Getter
+	@Setter
+	private String description;
 
-    public Role(Long id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
+	@ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private Set<Person> users;
+
+	public Role(Long id, String name, String description) {
+		this.id = id;
+		this.name = name;
+		this.description = description;
+	}
 
 }

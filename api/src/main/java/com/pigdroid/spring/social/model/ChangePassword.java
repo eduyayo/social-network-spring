@@ -12,7 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChangePassword implements Serializable{
+public class ChangePassword implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@NotNull
 	@Size(min = 5, max = 50)

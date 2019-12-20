@@ -40,11 +40,14 @@ import lombok.ToString;
 @Entity
 @Table(name = "persons")
 @NoArgsConstructor
-@EqualsAndHashCode(of = {"email"})
-@ToString(of = {"id", "fullName"})
+@EqualsAndHashCode(of = { "email" })
+@ToString(of = { "id", "fullName" })
 public class Person implements UserDetails, Serializable {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter
 	private Long id;
 
@@ -62,27 +65,33 @@ public class Person implements UserDetails, Serializable {
 	private String fullName;
 
 //	@Column(unique = true, length = 50) // TODO: 25.01.2017 Think how provide unique group [shortName + email]
-	@Getter @Setter
+	@Getter
+	@Setter
 	private String shortName;
 
 	@Column(unique = true, nullable = false)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private String email;
 
 	@Column(length = 60, nullable = false)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private String password;
 
 	@Column(length = 15)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private String phone;
 
 	@Temporal(TemporalType.DATE)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Date birthDate;
 
 	@Convert(converter = GenderConverter.class)
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Gender gender = Gender.UNDEFINED;
 
 	@Column(updatable = false, nullable = false)
@@ -91,42 +100,42 @@ public class Person implements UserDetails, Serializable {
 	private Date created = new Date();
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "friends",
-			joinColumns = @JoinColumn(name = "person_id"),
-			inverseJoinColumns = @JoinColumn(name = "friend_id"))
-	@Getter @Setter @JsonIgnore
+	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
+	@Getter
+	@Setter
+	@JsonIgnore
 	private Set<Person> friends = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "friends",
-			joinColumns = @JoinColumn(name = "friend_id"),
-			inverseJoinColumns = @JoinColumn(name = "person_id"))
-	@Getter @Setter @JsonIgnore
+	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "friend_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
+	@Getter
+	@Setter
+	@JsonIgnore
 	private Set<Person> friendOf = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@Getter @Setter @JsonIgnore
-	@JoinTable(name = "user_roles",
-			joinColumns = @JoinColumn(name = "person_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@Getter
+	@Setter
+	@JsonIgnore
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
 	public boolean hasFriend(Person friend) {
-		return friends.contains(friend);
+		return this.friends.contains(friend);
 	}
 
 	public void addFriend(Person friend) {
-		friends.add(friend);
+		this.friends.add(friend);
 		friend.friendOf.add(this);
 	}
 
 	public void removeFriend(Person friend) {
-		friends.remove(friend);
+		this.friends.remove(friend);
 		friend.friendOf.remove(this);
 	}
 
 	public boolean isFriendOf(Person person) {
-		return friendOf.contains(person);
+		return this.friendOf.contains(person);
 	}
 
 	public void setFirstName(String firstName) {
@@ -144,7 +153,7 @@ public class Person implements UserDetails, Serializable {
 	}
 
 	public Person(Long id, String firstName, String lastName, String shortName, String email, String password,
-				  String phone, Date birthDate, Gender gender, Set<Role> roles) {
+			String phone, Date birthDate, Gender gender, Set<Role> roles) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -164,9 +173,7 @@ public class Person implements UserDetails, Serializable {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return getRoles().stream()
-				.map(r -> new SimpleGrantedAuthority(r.getName()))
-				.collect(Collectors.toSet());
+		return getRoles().stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -194,7 +201,7 @@ public class Person implements UserDetails, Serializable {
 		return true;
 	}
 
-	@ToString(of = {"id", "firstName", "lastName"})
+	@ToString(of = { "id", "firstName", "lastName" })
 	public static class PersonBuilder {
 
 		private Long id;
@@ -262,7 +269,7 @@ public class Person implements UserDetails, Serializable {
 		}
 
 		public Person build() {
-			return new Person(id, firstName, lastName, shortName, email, password, phone, birthDate, gender, roles);
+			return new Person(this.id, this.firstName, this.lastName, this.shortName, this.email, this.password, this.phone, this.birthDate, this.gender, this.roles);
 		}
 	}
 

@@ -28,31 +28,38 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"sender", "recipient", "posted"})
-@ToString(of = {"id", "body"})
-public class Message implements Serializable{
+@EqualsAndHashCode(of = { "sender", "recipient", "posted" })
+@ToString(of = { "id", "body" })
+public class Message implements Serializable {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Getter
 	private Long id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "sender_id")
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Person sender;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "recipient_id")
-	@Getter @Setter
+	@Getter
+	@Setter
 	private Person recipient;
 
-	@Getter @Setter
+	@Getter
+	@Setter
 	@Column(nullable = false)
 	private String body;
 
 	@Column(updatable = false, nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	@Getter
+	@Builder.Default
 	private Date posted = new Date();
 
 }
