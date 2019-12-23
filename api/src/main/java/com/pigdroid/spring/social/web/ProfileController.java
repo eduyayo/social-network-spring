@@ -44,7 +44,7 @@ public class ProfileController {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileController.class);
 
-    private final PersonService personService;
+    private PersonService personService;
 
     @ApiOperation(value = "Sign-In")
     @GetMapping("/login")

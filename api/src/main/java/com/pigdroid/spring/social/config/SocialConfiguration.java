@@ -37,7 +37,7 @@ public class SocialConfiguration implements SocialConfigurer {
 
     private static final Logger log = LoggerFactory.getLogger(SocialConfiguration.class);
 
-    private final SocialConnectionSignUp connectionSignUp;
+    private SocialConnectionSignUp connectionSignUp;
 
     @Getter @Setter
     @NestedConfigurationProperty
@@ -87,8 +87,8 @@ public class SocialConfiguration implements SocialConfigurer {
     @Override
     public void addConnectionFactories(ConnectionFactoryConfigurer connectionFactoryConfigurer, Environment environment) {
         // Facebook configuration
-        final String facebookClientId = facebook.getClientId();
-        final String facebookClientSecret = facebook.getClientSecret();
+        final String facebookClientId = this.facebook.getClientId();
+        final String facebookClientSecret = this.facebook.getClientSecret();
         if (!StringUtils.isEmpty(facebookClientId) && !StringUtils.isEmpty(facebookClientSecret)) {
             log.debug("Configuring FacebookConnectionFactory...");
             final FacebookConnectionFactory facebookConnectionFactory =
@@ -100,8 +100,8 @@ public class SocialConfiguration implements SocialConfigurer {
         }
 
         // Google configuration
-            final String googleClientId = google.getClientId();
-            final String googleClientSecret = google.getClientSecret();
+            final String googleClientId = this.google.getClientId();
+            final String googleClientSecret = this.google.getClientSecret();
         if (!StringUtils.isEmpty(googleClientId) && !StringUtils.isEmpty(googleClientSecret)) {
             log.debug("Configuring GoogleConnectionFactory");
             final GoogleConnectionFactory googleConnectionFactory =
@@ -123,7 +123,7 @@ public class SocialConfiguration implements SocialConfigurer {
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
         final InMemoryUsersConnectionRepository inMemoryUsersConnectionRepository =
                 new InMemoryUsersConnectionRepository(connectionFactoryLocator);
-        inMemoryUsersConnectionRepository.setConnectionSignUp(connectionSignUp);
+        inMemoryUsersConnectionRepository.setConnectionSignUp(this.connectionSignUp);
         return inMemoryUsersConnectionRepository;
     }
 

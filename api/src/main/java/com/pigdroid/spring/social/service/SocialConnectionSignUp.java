@@ -18,7 +18,7 @@ public class SocialConnectionSignUp implements ConnectionSignUp {
 
     private static final Logger log = LoggerFactory.getLogger(SocialConnectionSignUp.class);
 
-    private final PersonService personService;
+    private PersonService personService;
 
     @Override
     public String execute(Connection<?> connection) {

@@ -34,7 +34,7 @@ public class PersonController {
 
     private static final Logger log = LoggerFactory.getLogger(MessageController.class);
 
-    private final PersonService personService;
+    private PersonService personService;
 
     @ApiOperation(value = "Find a person by Id")
     @GetMapping("/person/{id}")

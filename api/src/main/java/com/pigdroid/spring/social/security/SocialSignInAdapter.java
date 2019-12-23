@@ -15,7 +15,7 @@ import com.pigdroid.spring.social.config.Constants;
 @Service
 public class SocialSignInAdapter implements SignInAdapter {
 
-    private final UserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
     public SocialSignInAdapter(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;

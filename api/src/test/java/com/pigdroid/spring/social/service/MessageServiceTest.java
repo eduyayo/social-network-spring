@@ -27,7 +27,7 @@ public class MessageServiceTest extends AbstractApplicationTest {
     @Autowired
     private MessageService messageService;
 
-    private final Person person = getDefaultPerson();
+    private Person person = getDefaultPerson();
 
     @Test
     public void shouldFindAllDialogMessagesWithPerson() throws Exception {

@@ -43,8 +43,11 @@ public class PersonControllerTest extends AbstractApplicationTest {
 
 	private MockMvc mvc;
 
-	@Autowired private WebApplicationContext context;
-	@MockBean private PersonService personService;
+	@Autowired
+	private WebApplicationContext context;
+
+	@MockBean
+	private PersonService personService;
 
 	private final Person person = getDefaultPerson();
 	private final Pageable pageRequest = PageRequest.of(0, 1);

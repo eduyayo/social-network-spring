@@ -17,8 +17,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PersonService {
 
-    private final PasswordEncoder passwordEncoder;
-	private final PersonRepository personRepository;
+    private PasswordEncoder passwordEncoder;
+	private PersonRepository personRepository;
 
 	@Transactional(readOnly = true)
 	public Person findById(Long id) {

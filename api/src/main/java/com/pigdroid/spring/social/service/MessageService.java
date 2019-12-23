@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageService {
 
-	private final MessageRepository messageRepository;
+	private MessageRepository messageRepository;
 
 	public List<Message> getDialog(Person person, Person interlocutor) {
 		return this.messageRepository.findByRecipientOrSenderOrderByPostedDesc(person, interlocutor);

@@ -41,9 +41,14 @@ public class MessageControllerTest extends AbstractApplicationTest {
 
 	private MockMvc mvc;
 
-	@Autowired private WebApplicationContext context;
-	@MockBean private MessageService messageService;
-	@MockBean private PersonService personService;
+	@Autowired
+	private WebApplicationContext context;
+
+	@MockBean
+	private MessageService messageService;
+
+	@MockBean
+	private PersonService personService;
 
 	private final Person person = getDefaultPerson();
 	private final Message message = getDefaultMessage();

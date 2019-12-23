@@ -41,8 +41,8 @@ public class MessageController {
 
     private static final Logger log = LoggerFactory.getLogger(MessageController.class);
 
-    private final MessageService messageService;
-    private final PersonService personService;
+    private MessageService messageService;
+    private PersonService personService;
 
     @ApiOperation(value = "Dialog with a person")
     @GetMapping(value = "/dialog/{id}")
