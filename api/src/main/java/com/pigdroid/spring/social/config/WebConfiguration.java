@@ -10,7 +10,6 @@ import org.springframework.web.servlet.config.annotation.ContentNegotiationConfi
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod;
 
 @Configuration
 public class WebConfiguration implements WebMvcConfigurer {
@@ -33,7 +32,6 @@ public class WebConfiguration implements WebMvcConfigurer {
 
 	@Override
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
-		ServletInvocableHandlerMethod d;
 		configurer.favorPathExtension(true);
 	}
 

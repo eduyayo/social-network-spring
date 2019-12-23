@@ -1,9 +1,9 @@
-INSERT INTO roles (id, name, description)
+INSERT INTO role (id, name, description)
 VALUES
   (1, 'ROLE_ADMIN', 'admin'),
   (2, 'ROLE_USER', 'user');
 
-INSERT INTO persons (id, first_name, last_name, short_name, email, password, phone, birth_date, gender, created)
+INSERT INTO person (id, first_name, last_name, short_name, email, password, phone, birth_date, gender, created)
 VALUES
   (1, 'Alex', 'Saunin', 'maniac', 'alsaunin@gmail.com', '$2a$10$CUrSYLzTe/zBeLTMMbvLluvMqykTmufwHYqiNQP6uVC0.PyMc/H8m', '79211234567', '1984-03-23', 1, '2000-01-01'),
   (2, 'Vincent', 'Gigante', '', 'vinc@mail.ru', '$2a$10$CUrSYLzTe/zBeLTMMbvLluvMqykTmufwHYqiNQP6uVC0.PyMc/H8m', '76545465465', '1928-03-29', 1, '2000-01-11'),
@@ -22,14 +22,14 @@ VALUES
   (16, 'Donnie', 'Brasco', 'donny', 'donny@mail.ru', '$2a$10$CUrSYLzTe/zBeLTMMbvLluvMqykTmufwHYqiNQP6uVC0.PyMc/H8m', '76545465465', '1940-04-25', 1, '2000-01-15'),
   (17, 'Vega', 'Vincent', 'delavega', 'vega@mail.ru', '$2a$10$CUrSYLzTe/zBeLTMMbvLluvMqykTmufwHYqiNQP6uVC0.PyMc/H8m', '76545465465', '1954-02-18', 1, '2000-01-01');
 
-INSERT INTO user_roles (person_id, role_id) VALUES
+INSERT INTO user_role (person_id, role_id) VALUES
   (1, 1), (1, 2), (2, 2), (3, 2), (5, 2), (6, 2), (7, 2), (8, 2), (9, 2), (10, 2), (11, 2), (12, 2), (13, 2), (14, 2), (15, 2), (16, 2), (17, 2);
 
-INSERT INTO friends (person_id, friend_id) VALUES
+INSERT INTO friend (person_id, friend_id) VALUES
   (1, 8), (2, 1), (1, 9), (1, 3), (1, 12), (1, 10), (1, 13), (1, 2), (5, 1), (1, 5), (15, 2), (15, 5), (15, 3), (16, 1),
   (16, 8), (16, 14), (1, 16), (17, 3), (17, 5), (17, 1), (1, 17);
 
-INSERT INTO messages (id, posted, sender_id, recipient_id, body) VALUES
+INSERT INTO message (id, posted, sender_id, recipient_id, body) VALUES
   (1, {ts '2016-07-20 00:00:00.0'}, 1, 5, 'Привет'),
   (2, {ts '2016-07-20 00:00:01.0'}, 5, 1, 'Привет'),
   (3, {ts '2016-07-20 12:02:43.0'}, 1, 5, 'Как дела?'),

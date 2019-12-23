@@ -2,16 +2,16 @@
 --
 -- SET SCHEMA social_network;
 
-DROP TABLE IF EXISTS persons;
-DROP TABLE IF EXISTS friends;
+DROP TABLE IF EXISTS person;
+DROP TABLE IF EXISTS friend;
 
-CREATE TABLE IF NOT EXISTS roles (
+CREATE TABLE IF NOT EXISTS role (
   id          BIGINT IDENTITY PRIMARY KEY,
   name        VARCHAR(50) UNIQUE NOT NULL,
   description VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS persons (
+CREATE TABLE IF NOT EXISTS person (
   id         BIGINT IDENTITY PRIMARY KEY,
   first_name VARCHAR(50)        NOT NULL,
   last_name  VARCHAR(50)        NOT NULL,
@@ -24,26 +24,26 @@ CREATE TABLE IF NOT EXISTS persons (
   created    DATETIME           NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS user_roles (
+CREATE TABLE IF NOT EXISTS user_role (
   person_id BIGINT NOT NULL,
   role_id   BIGINT NOT NULL,
-  FOREIGN KEY (person_id) REFERENCES persons (id),
-  FOREIGN KEY (role_id) REFERENCES roles (id),
+  FOREIGN KEY (person_id) REFERENCES person (id),
+  FOREIGN KEY (role_id) REFERENCES role (id),
 );
 
-CREATE TABLE IF NOT EXISTS friends (
+CREATE TABLE IF NOT EXISTS friend (
   person_id BIGINT NOT NULL,
   friend_id BIGINT NOT NULL,
-  FOREIGN KEY (person_id) REFERENCES persons (id),
-  FOREIGN KEY (friend_id) REFERENCES persons (id),
+  FOREIGN KEY (person_id) REFERENCES person (id),
+  FOREIGN KEY (friend_id) REFERENCES person (id),
 );
 
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE IF NOT EXISTS message (
   id           BIGINT IDENTITY PRIMARY KEY,
   posted       DATETIME NOT NULL,
   sender_id    BIGINT   NOT NULL,
   recipient_id BIGINT   NOT NULL,
   body         VARCHAR(1000),
-  FOREIGN KEY (sender_id) REFERENCES persons (id),
-  FOREIGN KEY (recipient_id) REFERENCES persons (id),
+  FOREIGN KEY (sender_id) REFERENCES person (id),
+  FOREIGN KEY (recipient_id) REFERENCES person (id),
 );

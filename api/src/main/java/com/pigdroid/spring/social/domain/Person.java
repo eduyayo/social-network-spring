@@ -38,7 +38,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "persons")
+@Table(name = "person")//@Table(name = "person", uniqueConstraints = {@UniqueConstraint(columnNames={"shortName", "email"})})
 @NoArgsConstructor
 @EqualsAndHashCode(of = { "email" })
 @ToString(of = { "id", "fullName" })
@@ -64,7 +64,6 @@ public class Person implements UserDetails, Serializable {
 	@Formula(value = "concat(first_name, ' ', last_name)")
 	private String fullName;
 
-//	@Column(unique = true, length = 50) // TODO: 25.01.2017 Think how provide unique group [shortName + email]
 	@Getter
 	@Setter
 	private String shortName;
@@ -100,14 +99,14 @@ public class Person implements UserDetails, Serializable {
 	private Date created = new Date();
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
+	@JoinTable(name = "friend", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "friend_id"))
 	@Getter
 	@Setter
 	@JsonIgnore
 	private Set<Person> friends = new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "friends", joinColumns = @JoinColumn(name = "friend_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
+	@JoinTable(name = "friend", joinColumns = @JoinColumn(name = "friend_id"), inverseJoinColumns = @JoinColumn(name = "person_id"))
 	@Getter
 	@Setter
 	@JsonIgnore
@@ -117,7 +116,7 @@ public class Person implements UserDetails, Serializable {
 	@Getter
 	@Setter
 	@JsonIgnore
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "person_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
 
 	public boolean hasFriend(Person friend) {
