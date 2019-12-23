@@ -2,6 +2,7 @@ package com.pigdroid.spring.social.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pigdroid.spring.social.domain.Message;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MessageService {
 
+	@Autowired
 	private MessageRepository messageRepository;
 
 	public List<Message> getDialog(Person person, Person interlocutor) {

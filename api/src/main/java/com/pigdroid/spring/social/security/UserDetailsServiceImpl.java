@@ -16,7 +16,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private static final Logger log = LoggerFactory.getLogger(UserDetailsServiceImpl.class);
 
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
     public UserDetailsServiceImpl(PersonRepository personRepository) {
         this.personRepository = personRepository;

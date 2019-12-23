@@ -7,6 +7,7 @@ import static com.pigdroid.spring.social.config.Constants.REMEMBER_ME_TOKEN;
 import java.util.Arrays;
 import java.util.Collections;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,6 +34,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+	@Autowired
     private UserDetailsServiceImpl userDetailsService;
 
     @Override

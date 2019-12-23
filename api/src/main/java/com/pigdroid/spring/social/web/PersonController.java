@@ -4,6 +4,7 @@ import static com.pigdroid.spring.social.config.Constants.URI_API_PREFIX;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -34,6 +35,7 @@ public class PersonController {
 
     private static final Logger log = LoggerFactory.getLogger(MessageController.class);
 
+    @Autowired
     private PersonService personService;
 
     @ApiOperation(value = "Find a person by Id")
