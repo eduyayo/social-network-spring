@@ -39,11 +39,13 @@ public class SocialConfiguration implements SocialConfigurer {
 
     private SocialConnectionSignUp connectionSignUp;
 
-    @Getter @Setter
+    @Getter 
+    @Setter
     @NestedConfigurationProperty
     private SocialConnection facebook;
 
-    @Getter @Setter
+    @Getter 
+    @Setter
     @NestedConfigurationProperty
     private SocialConnection google;
 
